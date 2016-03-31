@@ -42,6 +42,7 @@
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:text="KILL"
+
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:focusable="true" />

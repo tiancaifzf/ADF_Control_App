@@ -1,5 +1,6 @@
 package com.example.max_fzf.root_test;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     Process localProcess = null;
     OutputStream localOutputStream = null;
     public static final String KEY="com.example.max_fzf.root_test";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity
                         localDataOutputStream.writeBytes("mount -o remount,rw /system\n");
                         localDataOutputStream.writeBytes("rm -r /system/df_file\n");
                         localDataOutputStream.writeBytes("echo \"Lcom/unity3d/ads/android/UnityAds;,Z,canShow,Lcom/example/max_fzf/hook/MainActivity;,Z,canShow\" > /system/df_file\n");
-                       // localDataOutputStream.writeBytes("echo \"Lcom/google/android/gms/ads/AdView;,VL,loadAd,Lcom/example/max_fzf/hook/MainActivity;,VL,deleteAd\" >> /system/df_file\n");
+                        localDataOutputStream.writeBytes("echo \"Lcom/google/android/gms/ads/AdView;,VL,loadAd,Lcom/example/max_fzf/hook/MainActivity;,VL,deleteAd\" >> /system/df_file\n");
                         localDataOutputStream.writeBytes("chmod 644 /system/df_file\n");
                         localDataOutputStream.writeBytes("mount -o remount,ro /system\n");
                         //isChecked=true;
