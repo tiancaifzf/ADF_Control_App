@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,8 +24,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     //public boolean ischecked;
-    Process localProcess = null;
-    OutputStream localOutputStream = null;
+     Process localProcess = null;
+     OutputStream localOutputStream = null;
     public static final String KEY="com.example.max_fzf.root_test";
 
     @Override
@@ -62,8 +63,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-        ss.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
+        ss.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity
                         localDataOutputStream.writeBytes("chmod 644 /system/df_file\n");
                         localDataOutputStream.writeBytes("mount -o remount,ro /system\n");
                         //isChecked=true;
-                        editor.putBoolean("KEY_Boolean",true);
+                        editor.putBoolean("KEY_Boolean", true);
                         editor.apply();
                         editor.commit();
-                        Log.d("ADF!!","turn on !success!");
+                        Log.d("ADF!!", "turn on !success!");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
                         localDataOutputStream.writeBytes("mount -o remount,rw /system\n");
                         localDataOutputStream.writeBytes("rm -r /system/df_file\n");
                         //isChecked=false;
-                        editor.putBoolean("KEY_Boolean",false);
+                        editor.putBoolean("KEY_Boolean", false);
                         editor.commit();
                         Log.d("ADF!!", "turn off !success!");
                     } catch (IOException e) {
@@ -110,4 +110,27 @@ public class MainActivity extends AppCompatActivity
         Intent J=new Intent(this,ShowPackage_activity.class);
         startActivity(J);
     }
+    public static void handle(String packagename) throws IOException {
+
+
+
+        Process localProcess = null;
+        OutputStream localOutputStream = null;
+        try {
+            Log.d("33333333333333333","333333333333333333"+packagename);
+            localProcess = Runtime.getRuntime().exec("su");
+            localOutputStream = localProcess.getOutputStream();
+            DataOutputStream localDataOutputStream = new DataOutputStream(localOutputStream);
+            localDataOutputStream.writeBytes("mount -o remount,rw /system\n");
+            localDataOutputStream.writeBytes("rm -r /system/df_file\n");
+            localDataOutputStream.writeBytes("echo \"" +packagename+"\" >> /system/df_file\n");
+            localDataOutputStream.writeBytes("chmod 644 /system/df_file\n");
+            localDataOutputStream.writeBytes("mount -o remount,ro /system\n");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
